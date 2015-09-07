@@ -1,0 +1,48 @@
+require 'net/http'
+require "uri"
+require 'json'
+
+url = URI.parse('https://atom.io')
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+req = Net::HTTP::Get.new("/api/updates")
+
+res = http.request(req)
+
+if res.code != "200"
+  puts "Error Code: " + res.code
+  raise res.body
+end
+
+body = JSON.parse(res.body)
+
+atom_version = body["name"]
+
+puts "Atom Version: " + atom_version
+
+url = URI.parse('https://packagecloud.io')
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+req = Net::HTTP::Get.new("/api/v1/repos/joshua-anderson/atom/package/deb/ubuntu/utopic/atom/amd64/versions.json")
+req.basic_auth ENV['PACKAGECLOUD_TOKEN'], ''
+
+res = http.request(req)
+
+if res.code != "200"
+  puts "Error Code: " + res.code
+  raise res.body
+end
+body = JSON.parse(res.body)
+
+uploaded_version = body[0]["version"]
+
+puts 'Uploaded Version: ' + uploaded_version
+
+if atom_version == uploaded_version
+  puts 'Already up to date!'
+  exit
+end
+
+system('curl -o $PWD/atom.deb https://atom.io/download/deb')
+system('package_cloud push joshua-anderson/atom/ubuntu/utopic atom.deb')
+system('package_cloud push joshua-anderson/atom/ubuntu/vivid atom.deb')
