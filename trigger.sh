@@ -3,6 +3,8 @@ body='{
   "branch":"master"
 }}'
 
+echo $TOKEN
+
 curl -s -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
