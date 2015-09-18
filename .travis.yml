@@ -1,7 +1,6 @@
 language: ruby
 cache: bundler
 rvm: 2.2.2
-install: gem install package_cloud
 script: ruby atom-uploader.rb
 notifications:
   email:
