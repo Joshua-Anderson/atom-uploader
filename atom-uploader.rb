@@ -43,8 +43,8 @@ if atom_version == uploaded_version
   exit
 end
 
-system('curl -L -o $PWD/atom.deb https://atom.io/download/deb')
-system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/utopic atom.deb')
-system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/utopic atom_#{uploaded_version}_amd64.deb")
-system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/vivid atom.deb')
-system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/vivid atom_#{uploaded_version}_amd64.deb")
+raise "Error" if !system('curl -L -o $PWD/atom.deb https://atom.io/download/deb')
+raise "Error" if !system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/utopic atom.deb')
+raise "Error" if !system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/utopic atom_#{uploaded_version}_amd64.deb")
+raise "Error" if !system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/vivid atom.deb')
+raise "Error" if !system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/vivid atom_#{uploaded_version}_amd64.deb")
