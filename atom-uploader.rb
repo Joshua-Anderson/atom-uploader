@@ -45,6 +45,6 @@ end
 
 raise "Error" if !system('curl -L -o $PWD/atom.deb https://atom.io/download/deb')
 raise "Error" if !system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/trusty atom.deb')
-raise "Error" if !system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/trsuty atom_#{uploaded_version}_amd64.deb")
+raise "Error" if !system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/trusty atom_#{uploaded_version}_amd64.deb")
 raise "Error" if !system('bundle exec package_cloud push joshua-anderson/atom/ubuntu/wily atom.deb')
 raise "Error" if !system("bundle exec package_cloud yank joshua-anderson/atom/ubuntu/wily atom_#{uploaded_version}_amd64.deb")
